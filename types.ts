@@ -1,4 +1,5 @@
 export enum AppStep {
+  WELCOME = 'WELCOME',
   UPLOAD = 'UPLOAD',
   ANALYZING = 'ANALYZING',
   VIEW_ANSWERS = 'VIEW_ANSWERS',

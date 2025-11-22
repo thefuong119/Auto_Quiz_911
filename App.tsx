@@ -5,18 +5,24 @@ import { FileUpload } from './components/FileUpload';
 import { AnswersView } from './components/AnswersView';
 import { QuizConfigForm } from './components/QuizConfigForm';
 import { StudentQuizView } from './components/StudentQuizView';
+import { WelcomeView } from './components/WelcomeView';
 import { Button } from './components/Button';
 import { AppStep, FileData, QAItem, QuizConfig, QuizQuestion } from './types';
 import { analyzeDocumentForAnswers, generateQuizFromDocument } from './services/geminiService';
 
 const App: React.FC = () => {
-  const [step, setStep] = useState<AppStep>(AppStep.UPLOAD);
+  // Initialize with WELCOME step
+  const [step, setStep] = useState<AppStep>(AppStep.WELCOME);
   const [fileData, setFileData] = useState<FileData | null>(null);
   const [qaItems, setQaItems] = useState<QAItem[]>([]);
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
   const [quizConfig, setQuizConfig] = useState<QuizConfig | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleStart = () => {
+      setStep(AppStep.UPLOAD);
+  };
 
   const handleFileSelect = (data: FileData) => {
     setFileData(data);
@@ -71,7 +77,7 @@ const App: React.FC = () => {
   };
 
   const resetApp = () => {
-    setStep(AppStep.UPLOAD);
+    setStep(AppStep.WELCOME); // Go back to Welcome screen on full reset
     setFileData(null);
     setQaItems([]);
     setQuizQuestions([]);
@@ -79,6 +85,11 @@ const App: React.FC = () => {
   };
 
   const renderContent = () => {
+    // Step 0: Welcome
+    if (step === AppStep.WELCOME) {
+        return <WelcomeView onStart={handleStart} />;
+    }
+
     // Step 1: Upload
     if (step === AppStep.UPLOAD && !fileData) {
       return <FileUpload onFileSelect={handleFileSelect} />;

@@ -64,6 +64,14 @@ export const StudentQuizView: React.FC<StudentQuizViewProps> = ({ questions, dur
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [answers, questions]);
 
+  const handleRetake = () => {
+    setAnswers({});
+    setScore(0);
+    setIsSubmitted(false);
+    setTimeLeft(durationMinutes * 60);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleSendEmail = () => {
       if (!email || !email.includes('@')) {
           alert('Vui lòng nhập địa chỉ email hợp lệ');
@@ -112,13 +120,20 @@ export const StudentQuizView: React.FC<StudentQuizViewProps> = ({ questions, dur
                     </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <div className="flex flex-col sm:flex-row justify-center gap-4 flex-wrap">
                      <Button onClick={() => setShowEmailModal(true)} variant="secondary" className="px-6">
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        Gửi kết quả cho tôi
+                        Gửi kết quả
                      </Button>
-                     <Button onClick={onFinish} variant="primary" className="px-8 shadow-lg">
-                        Tạo đề mới
+                     
+                     <Button onClick={handleRetake} variant="outline" className="px-6 border-gray-300 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200">
+                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Làm lại
+                     </Button>
+
+                     <Button onClick={onFinish} variant="danger" className="px-8 shadow-lg bg-red-500 hover:bg-red-600 focus:ring-red-500 border-transparent text-white">
+                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        Thoát
                      </Button>
                 </div>
             </div>

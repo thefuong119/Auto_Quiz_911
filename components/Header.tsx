@@ -8,6 +8,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ currentStep, onReset }) => {
   const isQuizMode = currentStep === AppStep.TAKE_QUIZ || currentStep === AppStep.QUIZ_RESULT;
+  const isWelcome = currentStep === AppStep.WELCOME;
 
   // Helper to check active state
   const isActive = (step: AppStep) => currentStep === step;
@@ -28,14 +29,14 @@ export const Header: React.FC<HeaderProps> = ({ currentStep, onReset }) => {
           </div>
           <div className="flex flex-col">
              <h1 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-700 hidden sm:block">
-                Hệ Thống Kiểm Tra
+                Tạo bài trắc nghiệm tự động
              </h1>
-             <span className="text-xs text-gray-500 font-medium tracking-wide hidden sm:block">Powered by Gemini AI</span>
+             <span className="text-xs text-gray-500 font-medium tracking-wide hidden sm:block">bằng Gemini AI</span>
           </div>
         </div>
         
-        {!isQuizMode && (
-          <nav className="flex items-center gap-2 bg-gray-100/50 p-1.5 rounded-full border border-gray-200/60">
+        {!isQuizMode && !isWelcome && (
+          <nav className="flex items-center gap-2 bg-gray-100/50 p-1.5 rounded-full border border-gray-200/60 hidden md:flex">
             <div className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
               isActive(AppStep.UPLOAD) ? 'bg-white text-indigo-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'
             }`}>
@@ -68,6 +69,12 @@ export const Header: React.FC<HeaderProps> = ({ currentStep, onReset }) => {
                 </span>
                 Đang diễn ra
              </div>
+        )}
+
+        {isWelcome && (
+            <div className="hidden sm:block px-4 py-1.5 bg-indigo-600 text-white rounded-full text-sm font-bold shadow-lg shadow-indigo-500/30">
+                Phiên bản 1.0
+            </div>
         )}
       </div>
     </header>
