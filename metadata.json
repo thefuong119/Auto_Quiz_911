@@ -1,0 +1,5 @@
+{
+  "name": "TẠO BÀI TRẮC NGHIỆM TRỰC TUYẾN",
+  "description": "Ứng dụng hỗ trợ giáo viên tự động giải đề và tạo bài trắc nghiệm từ tài liệu PDF/Word sử dụng Gemini AI.",
+  "requestFramePermissions": []
+}
